@@ -8,7 +8,7 @@ def recordWav(path):
 	CHANNELS = 2
 	RATE = 44100
 	CHUNK = 1024
-	RECORD_SECONDS = 5
+	RECORD_SECONDS = 3
 	 
 	p = pyaudio.PyAudio()
 	 
@@ -35,6 +35,7 @@ def recordWav(path):
 	waveFile.setframerate(RATE)
 	waveFile.writeframes(b''.join(frames))
 	waveFile.close()
+
 
 
 def playWav(path):
@@ -74,3 +75,49 @@ def openFileBrowserPic():
 	root.filename = filedialog.askopenfilename(initialdir="/", title="Select file",
 											   filetypes=(("jpeg files", "*.jpg"),("PNG file","*.png")))
 	return root.filename
+
+def within(left,down,width,height,x,y):
+	return left < x < left+width and down < y < down +height
+
+
+def displayText(screen,text,points,fontColor,font):
+	(a,b,c,d)=points
+	#a,b=coordinates/ c=width, d=height
+	myFont = font
+	textSurface = myFont.render(text, True, fontColor)
+	textRect1 = textSurface.get_rect()
+	textRect1.center = (a + c//2, b + d//2)
+	screen.blit(textSurface, textRect1)
+	
+def displayTextAlignLeft(screen,text,a,b,fontColor,font):
+	textSurface=font.render(text,True,fontColor)
+	textRect1=textSurface.get_rect()
+	screen.blit(textSurface,(a,b+5))
+
+############## init for all class ######################################
+def initColor(self):
+	self.white = (254,251,249)
+	self.black= (0,0,0)
+	self.grey=(99,99,112)
+	self.lightBlue=(79,160,156)
+	self.darkBlue=(18,83,104)
+	self.deepBlue=(70,130,180)
+	self.lightRed=(251,62,46)
+	self.darkRed=(106,26,26)
+
+	
+def loadFont(self):
+	self.regularFont=pygame.font.SysFont('harlowsolid',90)
+	self.titleFont=pygame.font.SysFont('harlowsolid',70)
+	self.btnFont=pygame.font.SysFont("arial",20)
+	self.settingFont=pygame.font.SysFont('harlowsolid',30)
+	font=pygame.font.get_fonts()
+
+def initPic(self):
+	self.bg=pygame.image.load("2.jpg")
+	self.backBtnImage=pygame.image.load("back.png")
+	self.mtsIcon=pygame.image.load("musicToSheet.png")
+	self.mmIcon=pygame.image.load("musicMaking.png")
+	self.trebleClef=pygame.image.load("icon/trebleClef.png")
+	self.bassClef=pygame.image.load("icon/bassClef.png")
+	self.clefPics=[self.trebleClef,self.bassClef]
